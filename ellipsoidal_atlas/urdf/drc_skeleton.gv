@@ -1,0 +1,86 @@
+digraph G {
+node [shape=box];
+"pelvis" [label="pelvis"];
+"ltorso" [label="ltorso"];
+"mtorso" [label="mtorso"];
+"utorso" [label="utorso"];
+"l_clav" [label="l_clav"];
+"l_scap" [label="l_scap"];
+"l_uarm" [label="l_uarm"];
+"l_larm" [label="l_larm"];
+"l_farm" [label="l_farm"];
+"l_hand" [label="l_hand"];
+"r_clav" [label="r_clav"];
+"r_scap" [label="r_scap"];
+"r_uarm" [label="r_uarm"];
+"r_larm" [label="r_larm"];
+"r_farm" [label="r_farm"];
+"r_hand" [label="r_hand"];
+"l_uglut" [label="l_uglut"];
+"l_lglut" [label="l_lglut"];
+"l_uleg" [label="l_uleg"];
+"l_lleg" [label="l_lleg"];
+"l_talus" [label="l_talus"];
+"l_foot" [label="l_foot"];
+"r_uglut" [label="r_uglut"];
+"r_lglut" [label="r_lglut"];
+"r_uleg" [label="r_uleg"];
+"r_lleg" [label="r_lleg"];
+"r_talus" [label="r_talus"];
+"r_foot" [label="r_foot"];
+node [shape=ellipse, color=blue, fontcolor=blue];
+"pelvis" -> "back_lbz" [label="xyz: -0.0125 0 0 \nrpy: 0 -0 0"]
+"back_lbz" -> "ltorso"
+"ltorso" -> "back_mby" [label="xyz: 0 0 0.09 \nrpy: 0 -0 0"]
+"back_mby" -> "mtorso"
+"mtorso" -> "back_ubx" [label="xyz: 0 0 0.05 \nrpy: 0 -0 0"]
+"back_ubx" -> "utorso"
+"utorso" -> "l_arm_usy" [label="xyz: 0.024 0.221 0.289 \nrpy: 0 -0 0"]
+"l_arm_usy" -> "l_clav"
+"l_clav" -> "l_arm_shx" [label="xyz: 0 0.075 0.036 \nrpy: 0 -0 0"]
+"l_arm_shx" -> "l_scap"
+"l_scap" -> "l_arm_ely" [label="xyz: 0 0.185 0 \nrpy: 0 -0 0"]
+"l_arm_ely" -> "l_uarm"
+"l_uarm" -> "l_arm_elx" [label="xyz: 0 0.121 0.013 \nrpy: 0 -0 0"]
+"l_arm_elx" -> "l_larm"
+"l_larm" -> "l_arm_uwy" [label="xyz: 0 0.188 -0.013 \nrpy: 0 -0 0"]
+"l_arm_uwy" -> "l_farm"
+"l_farm" -> "l_arm_mwx" [label="xyz: 0 0.058 0 \nrpy: 0 -0 0"]
+"l_arm_mwx" -> "l_hand"
+"utorso" -> "r_arm_usy" [label="xyz: 0.024 -0.221 0.289 \nrpy: 0 -0 0"]
+"r_arm_usy" -> "r_clav"
+"r_clav" -> "r_arm_shx" [label="xyz: 0 -0.075 0.036 \nrpy: 0 -0 0"]
+"r_arm_shx" -> "r_scap"
+"r_scap" -> "r_arm_ely" [label="xyz: 0 -0.185 0 \nrpy: 0 -0 0"]
+"r_arm_ely" -> "r_uarm"
+"r_uarm" -> "r_arm_elx" [label="xyz: 0 -0.121 0.013 \nrpy: 0 -0 0"]
+"r_arm_elx" -> "r_larm"
+"r_larm" -> "r_arm_uwy" [label="xyz: 0 -0.188 -0.013 \nrpy: 0 -0 0"]
+"r_arm_uwy" -> "r_farm"
+"r_farm" -> "r_arm_mwx" [label="xyz: 0 -0.058 0 \nrpy: 0 -0 0"]
+"r_arm_mwx" -> "r_hand"
+"pelvis" -> "l_leg_uhz" [label="xyz: 0 0.089 0 \nrpy: 0 -0 0"]
+"l_leg_uhz" -> "l_uglut"
+"l_uglut" -> "l_leg_mhx" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"l_leg_mhx" -> "l_lglut"
+"l_lglut" -> "l_leg_lhy" [label="xyz: 0.05 0 -0.05 \nrpy: 0 -0 0"]
+"l_leg_lhy" -> "l_uleg"
+"l_uleg" -> "l_leg_kny" [label="xyz: -0.05 0 -0.374 \nrpy: 0 -0 0"]
+"l_leg_kny" -> "l_lleg"
+"l_lleg" -> "l_leg_uay" [label="xyz: 0 0 -0.422 \nrpy: 0 -0 0"]
+"l_leg_uay" -> "l_talus"
+"l_talus" -> "l_leg_lax" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"l_leg_lax" -> "l_foot"
+"pelvis" -> "r_leg_uhz" [label="xyz: 0 -0.089 0 \nrpy: 0 -0 0"]
+"r_leg_uhz" -> "r_uglut"
+"r_uglut" -> "r_leg_mhx" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"r_leg_mhx" -> "r_lglut"
+"r_lglut" -> "r_leg_lhy" [label="xyz: 0.05 0 -0.05 \nrpy: 0 -0 0"]
+"r_leg_lhy" -> "r_uleg"
+"r_uleg" -> "r_leg_kny" [label="xyz: -0.05 0 -0.374 \nrpy: 0 -0 0"]
+"r_leg_kny" -> "r_lleg"
+"r_lleg" -> "r_leg_uay" [label="xyz: 0 0 -0.422 \nrpy: 0 -0 0"]
+"r_leg_uay" -> "r_talus"
+"r_talus" -> "r_leg_lax" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"r_leg_lax" -> "r_foot"
+}

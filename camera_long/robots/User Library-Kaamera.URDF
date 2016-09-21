@@ -1,0 +1,43 @@
+<robot
+  name="User Library-Kaamera">
+  <link
+    name="User Library-Kaamera">
+    <inertial>
+      <origin
+        xyz="-5.0996E-05 -0.029719 0.0072913"
+        rpy="0 0 0" />
+      <mass
+        value="3.286" />
+      <inertia
+        ixx="0.024102346271926"
+        ixy="5.40955905508391E-06"
+        ixz="7.41332613701025E-06"
+        iyy="-0.00177048198906155"
+        iyz="-0.00789613610288936"
+        izz="0.00177048198906155" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="1.5707963267949 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://User Library-Kaamera/meshes/User Library-Kaamera.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="1.5707963267949 0 0" />
+      <geometry>
+        <mesh
+          filename="package://User Library-Kaamera/meshes/User Library-Kaamera.STL" />
+      </geometry>
+    </collision>
+  </link>
+</robot>

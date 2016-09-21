@@ -1,0 +1,13 @@
+<launch>
+	
+	<arg name="gui" default="True"/>
+
+	<!-- Robot Description -->
+	<param name="robot_description" textfile="$(find ellipsoidal_atlas)/urdf/atlas_simple_shapes_ellipsoid.urdf" />
+	<param name="use_gui" value="$(arg gui)"/>
+
+	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
+	<node pkg="robot_state_publisher" type="robot_state_publisher" name="atlas_state_publisher"/>
+
+	<node name="rviz" pkg="rviz" type="rviz" />
+</launch>

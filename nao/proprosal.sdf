@@ -1,0 +1,4192 @@
+<sdf version='1.4'>
+  <world name='default'>
+    <light name='sun' type='directional'>
+      <cast_shadows>1</cast_shadows>
+      <pose>0 0 10 0 -0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+    <model name='ground_plane'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>100</mu>
+                <mu2>50</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <cast_shadows>0</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Grey</name>
+            </script>
+          </material>
+        </visual>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+    </model>
+    <physics type='ode'>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+      <gravity>0 0 -9.8</gravity>
+    </physics>
+    <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>1</shadows>
+    </scene>
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <latitude_deg>0</latitude_deg>
+      <longitude_deg>0</longitude_deg>
+      <elevation>0</elevation>
+      <heading_deg>0</heading_deg>
+    </spherical_coordinates>
+    <model name='nao_v40'>
+      <link name='base_link'>
+        <pose>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>-0.00413 0 0.04342 0 -0 0</pose>
+          <mass>1.04956</mass>
+          <inertia>
+            <ixx>0.00308361</ixx>
+            <ixy>1.43116e-05</ixy>
+            <ixz>-3.30211e-05</ixz>
+            <iyy>0.0028835</iyy>
+            <iyz>-2.70793e-05</iyz>
+            <izz>0.0015924</izz>
+          </inertia>
+        </inertial>
+        <collision name='base_link_collision_torso'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/Torso_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='base_link_visual_torso'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/Torso.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <sensor name='LSonar' type='ray'>
+          <update_rate>20</update_rate>
+          <visualize>0</visualize>
+          <ray>
+            <scan>
+              <horizontal>
+                <samples>5</samples>
+                <resolution>1</resolution>
+                <min_angle>-0.261799</min_angle>
+                <max_angle>0.261799</max_angle>
+              </horizontal>
+              <vertical>
+                <samples>5</samples>
+                <resolution>1</resolution>
+                <min_angle>-0.13</min_angle>
+                <max_angle>0.13</max_angle>
+              </vertical>
+            </scan>
+            <range>
+              <min>0.025</min>
+              <max>2.55</max>
+              <resolution>1</resolution>
+            </range>
+          </ray>
+          <plugin name='gazebo_ros_range' filename='libgazebo_ros_range.so'>
+            <robotNamespace>nao_robot</robotNamespace>
+            <gaussianNoise>0.05</gaussianNoise>
+            <alwaysOn>true</alwaysOn>
+            <updateRate>20</updateRate>
+            <topicName>sonar_left</topicName>
+            <frameName>LSonar_frame</frameName>
+            <minRange>0.025</minRange>
+            <maxRange>2.55</maxRange>
+            <fov>0.5235987755982988</fov>
+            <radiation>ultrasound</radiation>
+          </plugin>
+          <pose>0.00558253 0.0192068 0.0623853 -0.00478508 0.0436497 0.392441</pose>
+        </sensor>
+        <gravity>1</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <sensor name='RSonar' type='ray'>
+          <update_rate>20</update_rate>
+          <visualize>0</visualize>
+          <ray>
+            <scan>
+              <horizontal>
+                <samples>5</samples>
+                <resolution>1</resolution>
+                <min_angle>-0.261799</min_angle>
+                <max_angle>0.261799</max_angle>
+              </horizontal>
+              <vertical>
+                <samples>5</samples>
+                <resolution>1</resolution>
+                <min_angle>-0.13</min_angle>
+                <max_angle>0.13</max_angle>
+              </vertical>
+            </scan>
+            <range>
+              <min>0.025</min>
+              <max>2.55</max>
+              <resolution>1</resolution>
+            </range>
+          </ray>
+          <plugin name='gazebo_ros_range' filename='libgazebo_ros_range.so'>
+            <robotNamespace>nao_robot</robotNamespace>
+            <gaussianNoise>0.05</gaussianNoise>
+            <alwaysOn>true</alwaysOn>
+            <updateRate>20</updateRate>
+            <topicName>sonar_right</topicName>
+            <frameName>RSonar_frame</frameName>
+            <minRange>0.025</minRange>
+            <maxRange>2.55</maxRange>
+            <fov>0.5235987755982988</fov>
+            <radiation>ultrasound</radiation>
+          </plugin>
+          <pose>0.00558253 -0.0192068 0.0623853 0.00478508 0.0436497 -0.392441</pose>
+        </sensor>
+        <kinematic>0</kinematic>
+      </link>
+      <link name='Neck'>
+        <pose>0 0 0.1265 0 -0 0</pose>
+        <inertial>
+          <pose>-1e-05 0 -0.02742 0 -0 0</pose>
+          <mass>0.06442</mass>
+          <inertia>
+            <ixx>2.65584e-05</ixx>
+            <ixy>1.57e-09</ixy>
+            <ixz>0</ixz>
+            <iyy>2.75654e-05</iyy>
+            <iyz>-5.295e-08</iyz>
+            <izz>5.53372e-06</izz>
+          </inertia>
+        </inertial>
+        <collision name='Neck_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/HeadYaw_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='Neck_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/HeadYaw.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='HeadYaw' type='revolute'>
+        <child>Neck</child>
+        <parent>base_link</parent>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-2.08567</lower>
+            <upper>2.08567</upper>
+            <effort>1.547</effort>
+            <velocity>8.26797</velocity>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='Head'>
+        <pose>0 0 0.1265 0 -0 0</pose>
+        <inertial>
+          <pose>-0.00112 0 0.05258 0 -0 0</pose>
+          <mass>0.60533</mass>
+          <inertia>
+            <ixx>0.000957766</ixx>
+            <ixy>8.78814e-06</ixy>
+            <ixz>5.33702e-06</ixz>
+            <iyy>0.000816836</iyy>
+            <iyz>-2.99579e-05</iyz>
+            <izz>0.000984976</izz>
+          </inertia>
+        </inertial>
+        <collision name='Head_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/HeadPitch_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='Head_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/HeadPitch.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <sensor name='CameraBottom' type='camera'>
+          <update_rate>5</update_rate>
+          <camera name='camera_bottom'>
+            <horizontal_fov>1.06291</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>480</height>
+              <format>R8G8B8</format>
+            </image>
+            <clip>
+              <near>0.05</near>
+              <far>500</far>
+            </clip>
+            <noise>
+              <type>gaussian</type>
+              <mean>0</mean>
+              <stddev>0.007</stddev>
+            </noise>
+          </camera>
+          <plugin name='camera_controller' filename='libgazebo_ros_camera.so'>
+            <robotNamespace>/nao_robot</robotNamespace>
+            <alwaysOn>true</alwaysOn>
+            <updateRate>5.0</updateRate>
+            <cameraName>camera_bottom</cameraName>
+            <imageTopicName>image_raw</imageTopicName>
+            <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+            <frameName>CameraBottom_optical_frame</frameName>
+            <hackBaseline>0.07</hackBaseline>
+            <distortionK1>-0.0648764</distortionK1>
+            <distortionK2>0.06125202</distortionK2>
+            <distortionK3>0.00382815</distortionK3>
+            <distortionT1>-0.00551104</distortionT1>
+            <distortionT2>0.0</distortionT2>
+          </plugin>
+          <pose>0.05071 0 0.01774 0 0.692896 0</pose>
+        </sensor>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <sensor name='CameraTop' type='camera'>
+          <update_rate>5</update_rate>
+          <camera name='camera_top'>
+            <horizontal_fov>1.06291</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>480</height>
+              <format>R8G8B8</format>
+            </image>
+            <clip>
+              <near>0.3</near>
+              <far>500</far>
+            </clip>
+            <noise>
+              <type>gaussian</type>
+              <mean>0</mean>
+              <stddev>0.007</stddev>
+            </noise>
+          </camera>
+          <plugin name='camera_controller' filename='libgazebo_ros_camera.so'>
+            <robotNamespace>nao_robot</robotNamespace>
+            <alwaysOn>true</alwaysOn>
+            <updateRate>5.0</updateRate>
+            <cameraName>camera/top</cameraName>
+            <imageTopicName>image_raw</imageTopicName>
+            <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+            <frameName>CameraTop_optical_frame</frameName>
+            <hackBaseline>0.07</hackBaseline>
+            <distortionK1>-0.0545211</distortionK1>
+            <distortionK2>0.06919734</distortionK2>
+            <distortionK3>-0.0241095</distortionK3>
+            <distortionT1>-0.0112245</distortionT1>
+            <distortionT2>0.0</distortionT2>
+          </plugin>
+          <pose>0.05871 0 0.06364 0 0.0209435 0</pose>
+        </sensor>
+        <gravity>1</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='HeadPitch' type='revolute'>
+        <child>Head</child>
+        <parent>Neck</parent>
+        <axis>
+          <xyz>0 1 0</xyz>
+          <limit>
+            <lower>-0.671952</lower>
+            <upper>0.514872</upper>
+            <effort>1.532</effort>
+            <velocity>7.19407</velocity>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='LPelvis'>
+        <pose>0 0.05 -0.085 0 -0 0</pose>
+        <inertial>
+          <pose>-0.00781 -0.01114 0.02661 0 -0 0</pose>
+          <mass>0.06981</mass>
+          <inertia>
+            <ixx>2.3407e-05</ixx>
+            <ixy>1.07922e-06</ixy>
+            <ixz>-1.76003e-06</ixz>
+            <iyy>4.76355e-05</iyy>
+            <iyz>2.76058e-06</iyz>
+            <izz>4.97021e-05</izz>
+          </inertia>
+        </inertial>
+        <collision name='LPelvis_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LHipYawPitch_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='LPelvis_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LHipYawPitch.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='LHipYawPitch' type='revolute'>
+        <child>LPelvis</child>
+        <parent>base_link</parent>
+        <axis>
+          <xyz>0 0.707106 -0.707106</xyz>
+          <limit>
+            <lower>-1.14529</lower>
+            <upper>0.740718</upper>
+            <effort>3.348</effort>
+            <velocity>4.16174</velocity>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='LHip'>
+        <pose>0 0.05 -0.085 0 -0 0</pose>
+        <inertial>
+          <pose>-0.01549 0.00029 -0.00515 0 -0 0</pose>
+          <mass>0.13053</mass>
+          <inertia>
+            <ixx>2.41106e-05</ixx>
+            <ixy>-6.08684e-07</ixy>
+            <ixz>6.33119e-06</ixz>
+            <iyy>6.34892e-05</iyy>
+            <iyz>-1.99137e-07</iyz>
+            <izz>5.67694e-05</izz>
+          </inertia>
+        </inertial>
+        <collision name='LHip_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LHipRoll_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='LHip_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LHipRoll.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='LHipRoll' type='revolute'>
+        <child>LHip</child>
+        <parent>LPelvis</parent>
+        <axis>
+          <xyz>1 0 0</xyz>
+          <limit>
+            <lower>-0.379435</lower>
+            <upper>0.79046</upper>
+            <effort>3.348</effort>
+            <velocity>4.16174</velocity>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='LThigh'>
+        <pose>0 0.05 -0.085 0 -0 0</pose>
+        <inertial>
+          <pose>0.00138 0.00221 -0.05373 0 -0 0</pose>
+          <mass>0.38968</mass>
+          <inertia>
+            <ixx>0.000509844</ixx>
+            <ixy>2.11296e-06</ixy>
+            <ixz>5.64129e-05</ixz>
+            <iyy>0.000465358</iyy>
+            <iyz>-7.91029e-06</iyz>
+            <izz>0.000301098</izz>
+          </inertia>
+        </inertial>
+        <collision name='LThigh_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LHipPitch_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='LThigh_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LHipPitch.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='LHipPitch' type='revolute'>
+        <child>LThigh</child>
+        <parent>LHip</parent>
+        <axis>
+          <xyz>0 1 0</xyz>
+          <limit>
+            <lower>-1.53589</lower>
+            <upper>0.48398</upper>
+            <effort>3.023</effort>
+            <velocity>6.40239</velocity>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='LTibia'>
+        <pose>0 0.05 -0.185 0 -0 0</pose>
+        <inertial>
+          <pose>0.00453 0.00225 -0.04936 0 -0 0</pose>
+          <mass>0.29142</mass>
+          <inertia>
+            <ixx>0.000470586</ixx>
+            <ixy>3.60392e-06</ixy>
+            <ixz>-2.86648e-05</ixz>
+            <iyy>0.000412654</iyy>
+            <iyz>7.13013e-06</iyz>
+            <izz>0.000185772</izz>
+          </inertia>
+        </inertial>
+        <collision name='LTibia_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LKneePitch_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='LTibia_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LKneePitch.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='LKneePitch' type='revolute'>
+        <child>LTibia</child>
+        <parent>LThigh</parent>
+        <axis>
+          <xyz>0 1 0</xyz>
+          <limit>
+            <lower>-0.0923279</lower>
+            <upper>2.11255</upper>
+            <effort>3.023</effort>
+            <velocity>6.40239</velocity>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='LAnklePitch'>
+        <pose>0 0.05 -0.2879 0 -0 0</pose>
+        <inertial>
+          <pose>0.00045 0.00029 0.00685 0 -0 0</pose>
+          <mass>0.13416</mass>
+          <inertia>
+            <ixx>3.22034e-05</ixx>
+            <ixy>-8.83212e-09</ixy>
+            <ixz>4.27549e-06</ixz>
+            <iyy>6.7943e-05</iyy>
+            <iyz>2.84849e-07</iyz>
+            <izz>5.48269e-05</izz>
+          </inertia>
+        </inertial>
+        <collision name='LAnklePitch_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LAnklePitch_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='LAnklePitch_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LAnklePitch.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='LAnklePitch' type='revolute'>
+        <child>LAnklePitch</child>
+        <parent>LTibia</parent>
+        <axis>
+          <xyz>0 1 0</xyz>
+          <limit>
+            <lower>-1.18944</lower>
+            <upper>0.922581</upper>
+            <effort>3.023</effort>
+            <velocity>6.40239</velocity>
+          </limit>
+          <dynamics/>
+        </axis>
+        <physics>
+          <ode>
+            <limit>
+              <cfm>0</cfm>
+              <erp>0.2</erp>
+            </limit>
+          </ode>
+        </physics>
+      </joint>
+      <link name='l_ankle'>
+        <pose>0 0.05 -0.2879 0 -0 0</pose>
+        <inertial>
+          <pose>0.0254197 0.00330005 -0.0323906 0 -0 0</pose>
+          <mass>0.161848</mass>
+          <inertia>
+            <ixx>9.7902e-05</ixx>
+            <ixy>7.88087e-06</ixy>
+            <ixz>6.12736e-06</ixz>
+            <iyy>0.000370003</iyy>
+            <iyz>1.44244e-06</iyz>
+            <izz>0.000419447</izz>
+          </inertia>
+        </inertial>
+        <collision name='l_ankle_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LAnkleRoll_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode>
+                <max_vel>0.1</max_vel>
+                <min_depth>0.003</min_depth>
+              </ode>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+                <fdir1>1 0 0</fdir1>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <collision name='l_ankle_collision_LFsrFL_frame'>
+          <pose>0.07025 0.0299 -0.04511 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.01 0.01 0.005</size>
+            </box>
+          </geometry>
+          <surface>
+            <contact>
+              <ode>
+                <max_vel>0.1</max_vel>
+                <min_depth>0.003</min_depth>
+              </ode>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+                <fdir1>1 0 0</fdir1>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <surface>
+            <contact>
+              <ode>
+                <max_vel>0.1</max_vel>
+                <min_depth>0.003</min_depth>
+              </ode>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+                <fdir1>1 0 0</fdir1>
+              </ode>
+            </friction>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <collision name='l_ankle_collision_LFsrFR_frame'>
+          <pose>0.07025 -0.0231 -0.04511 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.01 0.01 0.005</size>
+            </box>
+          </geometry>
+          <surface>
+            <contact>
+              <ode>
+                <max_vel>0.1</max_vel>
+                <min_depth>0.003</min_depth>
+              </ode>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+                <fdir1>1 0 0</fdir1>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <surface>
+            <contact>
+              <ode>
+                <max_vel>0.1</max_vel>
+                <min_depth>0.003</min_depth>
+              </ode>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+                <fdir1>1 0 0</fdir1>
+              </ode>
+            </friction>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <collision name='l_ankle_collision_LFsrRL_frame'>
+          <pose>-0.03025 0.0299 -0.04511 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.01 0.01 0.005</size>
+            </box>
+          </geometry>
+          <surface>
+            <contact>
+              <ode>
+                <max_vel>0.1</max_vel>
+                <min_depth>0.003</min_depth>
+              </ode>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+                <fdir1>1 0 0</fdir1>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <surface>
+            <contact>
+              <ode>
+                <max_vel>0.1</max_vel>
+                <min_depth>0.003</min_depth>
+              </ode>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+                <fdir1>1 0 0</fdir1>
+              </ode>
+            </friction>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <collision name='l_ankle_collision_LFsrRR_frame'>
+          <pose>-0.02965 -0.0191 -0.04511 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.01 0.01 0.005</size>
+            </box>
+          </geometry>
+          <surface>
+            <contact>
+              <ode>
+                <max_vel>0.1</max_vel>
+                <min_depth>0.003</min_depth>
+              </ode>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+                <fdir1>1 0 0</fdir1>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <surface>
+            <contact>
+              <ode>
+                <max_vel>0.1</max_vel>
+                <min_depth>0.003</min_depth>
+              </ode>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+                <fdir1>1 0 0</fdir1>
+              </ode>
+            </friction>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='l_ankle_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LAnkleRoll.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <sensor name='LFsrFL' type='contact'>
+          <always_on>1</always_on>
+          <update_rate>20</update_rate>
+          <visualize>0</visualize>
+          <contact>
+            <collision>l_ankle_collision_LFsrFL_frame</collision>
+            <topic>__default_topic__</topic>
+          </contact>
+          <plugin name='gazebo_nao_LFsrFL' filename='libgazebo_ros_bumper.so'>
+            <robotNamespace>nao_robot</robotNamespace>
+            <alwaysOn>true</alwaysOn>
+            <bumperTopicName>FSR/LFoot/FrontLeft</bumperTopicName>
+            <frameName>RFsrFL_frame</frameName>
+          </plugin>
+          <pose>0.07025 0.0299 -0.04511 0 -0 0</pose>
+        </sensor>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <sensor name='LFsrFR' type='contact'>
+          <always_on>1</always_on>
+          <update_rate>20</update_rate>
+          <visualize>0</visualize>
+          <contact>
+            <collision>l_ankle_collision_LFsrFR_frame</collision>
+            <topic>__default_topic__</topic>
+          </contact>
+          <plugin name='gazebo_nao_ros_bumper' filename='libgazebo_ros_bumper.so'>
+            <robotNamespace>nao_robot</robotNamespace>
+            <alwaysOn>true</alwaysOn>
+            <bumperTopicName>FSR/LFoot/FrontRight</bumperTopicName>
+            <frameName>LFsrFR_frame</frameName>
+          </plugin>
+          <pose>0.07025 -0.0231 -0.04511 0 -0 0</pose>
+        </sensor>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <sensor name='LFsrRL' type='contact'>
+          <always_on>1</always_on>
+          <update_rate>20</update_rate>
+          <visualize>0</visualize>
+          <contact>
+            <collision>l_ankle_collision_LFsrRL_frame</collision>
+            <topic>__default_topic__</topic>
+          </contact>
+          <plugin name='gazebo_nao_ros_bumper' filename='libgazebo_ros_bumper.so'>
+            <robotNamespace>nao_robot</robotNamespace>
+            <alwaysOn>true</alwaysOn>
+            <bumperTopicName>FSR/LFoot/RearLeft</bumperTopicName>
+            <frameName>LFsrRL_frame</frameName>
+          </plugin>
+          <pose>-0.03025 0.0299 -0.04511 0 -0 0</pose>
+        </sensor>
+        <gravity>1</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <sensor name='LFsrRR' type='contact'>
+          <always_on>1</always_on>
+          <update_rate>20</update_rate>
+          <visualize>0</visualize>
+          <contact>
+            <collision>l_ankle_collision_LFsrRR_frame</collision>
+            <topic>__default_topic__</topic>
+          </contact>
+          <plugin name='gazebo_nao_ros_bumper' filename='libgazebo_ros_bumper.so'>
+            <robotNamespace>nao_robot</robotNamespace>
+            <alwaysOn>true</alwaysOn>
+            <bumperTopicName>FSR/LFoot/RearRight</bumperTopicName>
+            <frameName>LFsrRR_frame</frameName>
+          </plugin>
+          <pose>-0.02965 -0.0191 -0.04511 0 -0 0</pose>
+        </sensor>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='LAnkleRoll' type='revolute'>
+        <child>l_ankle</child>
+        <parent>LAnklePitch</parent>
+        <axis>
+          <xyz>1 0 0</xyz>
+          <limit>
+            <lower>-0.397761</lower>
+            <upper>0.768992</upper>
+            <effort>3.348</effort>
+            <velocity>4.16174</velocity>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='LShoulder'>
+        <pose>0 0.098 0.1 0 -0 0</pose>
+        <inertial>
+          <pose>-0.00165 -0.02663 0.00014 0 -0 0</pose>
+          <mass>0.07504</mass>
+          <inertia>
+            <ixx>3.10677e-05</ixx>
+            <ixy>1.2692e-06</ixy>
+            <ixz>6.04576e-09</ixz>
+            <iyy>1.39498e-05</iyy>
+            <iyz>-2.99484e-07</iyz>
+            <izz>3.30001e-05</izz>
+          </inertia>
+        </inertial>
+        <collision name='LShoulder_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LShoulderPitch_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='LShoulder_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LShoulderPitch.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='LShoulderPitch' type='revolute'>
+        <child>LShoulder</child>
+        <parent>base_link</parent>
+        <axis>
+          <xyz>0 1 0</xyz>
+          <limit>
+            <lower>-2.08567</lower>
+            <upper>2.08567</upper>
+            <effort>1.329</effort>
+            <velocity>8.26797</velocity>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='LBicep'>
+        <pose>0 0.098 0.1 0 -0 0</pose>
+        <inertial>
+          <pose>0.02455 0.00563 0.0033 0 -0 0</pose>
+          <mass>0.15777</mass>
+          <inertia>
+            <ixx>8.7181e-05</ixx>
+            <ixy>-2.53381e-05</ixy>
+            <ixz>-1.4213e-05</ixz>
+            <iyy>0.000274712</iyy>
+            <iyz>4.71439e-07</iyz>
+            <izz>0.000241812</izz>
+          </inertia>
+        </inertial>
+        <collision name='LBicep_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LShoulderRoll_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='LBicep_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LShoulderRoll.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='LShoulderRoll' type='revolute'>
+        <child>LBicep</child>
+        <parent>LShoulder</parent>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-0.314159</lower>
+            <upper>1.32645</upper>
+            <effort>1.7835</effort>
+            <velocity>7.19407</velocity>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='LElbow'>
+        <pose>0.105 0.113 0.1 0 -0 0</pose>
+        <inertial>
+          <pose>-0.02744 0 -0.00014 0 -0 0</pose>
+          <mass>0.06483</mass>
+          <inertia>
+            <ixx>5.59588e-06</ixx>
+            <ixy>4.21e-09</ixy>
+            <ixz>2.92241e-07</ixz>
+            <iyy>2.66179e-05</iyy>
+            <iyz>-1.84e-09</iyz>
+            <izz>2.76294e-05</izz>
+          </inertia>
+        </inertial>
+        <gravity>1</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='LElbowYaw' type='revolute'>
+        <child>LElbow</child>
+        <parent>LBicep</parent>
+        <axis>
+          <xyz>1 0 0</xyz>
+          <limit>
+            <lower>-2.08567</lower>
+            <upper>2.08567</upper>
+            <effort>1.547</effort>
+            <velocity>8.26797</velocity>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='LForeArm'>
+        <pose>0.105 0.113 0.1 0 -0 0</pose>
+        <inertial>
+          <pose>0.02556 0.00281 0.00076 0 -0 0</pose>
+          <mass>0.07761</mass>
+          <inertia>
+            <ixx>2.46746e-05</ixx>
+            <ixy>3.23152e-06</ixy>
+            <ixz>1.58221e-06</ixz>
+            <iyy>3.83837e-05</iyy>
+            <iyz>1.39194e-07</iyz>
+            <izz>3.59708e-05</izz>
+          </inertia>
+        </inertial>
+        <collision name='LForeArm_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LElbowRoll_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='LForeArm_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LElbowRoll.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='LElbowRoll' type='revolute'>
+        <child>LForeArm</child>
+        <parent>LElbow</parent>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-1.54462</lower>
+            <upper>-0.0349066</upper>
+            <effort>1.532</effort>
+            <velocity>7.19407</velocity>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='l_wrist'>
+        <pose>0.16095 0.113 0.1 0 -0 0</pose>
+        <inertial>
+          <pose>0.03434 -0.00088 0.00308 0 -0 0</pose>
+          <mass>0.18533</mass>
+          <inertia>
+            <ixx>6.86477e-05</ixx>
+            <ixy>1.15465e-07</ixy>
+            <ixz>-2.87254e-06</ixz>
+            <iyy>0.000135756</iyy>
+            <iyz>2.67539e-06</iyz>
+            <izz>0.000133228</izz>
+          </inertia>
+        </inertial>
+        <collision name='l_wrist_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LWristYaw_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='l_wrist_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LWristYaw.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='LWristYaw' type='revolute'>
+        <child>l_wrist</child>
+        <parent>LForeArm</parent>
+        <axis>
+          <xyz>1 0 0</xyz>
+          <limit>
+            <lower>-1.82387</lower>
+            <upper>1.82387</upper>
+            <effort>0.4075</effort>
+            <velocity>24.6229</velocity>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='LFinger11_link'>
+        <pose>0.23002 0.12457 0.09696 1.8862 0.976662 0.264067</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>2e-06</mass>
+          <inertia>
+            <ixx>1.1e-09</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1.1e-09</iyy>
+            <iyz>0</iyz>
+            <izz>1.1e-09</izz>
+          </inertia>
+        </inertial>
+        <collision name='LFinger11_link_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LFinger11_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='LFinger11_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LFinger11.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>0</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='LFinger11' type='revolute'>
+        <child>LFinger11_link</child>
+        <parent>l_wrist</parent>
+        <axis>
+          <xyz>1e-06 -0.984808 -0.173648</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='LFinger12_link'>
+        <pose>0.23778 0.126668 0.0850608 -1.97173 1.1097 2.77877</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>2e-06</mass>
+          <inertia>
+            <ixx>1.1e-09</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1.1e-09</iyy>
+            <iyz>0</iyz>
+            <izz>1.1e-09</izz>
+          </inertia>
+        </inertial>
+        <collision name='LFinger12_link_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LFinger12_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='LFinger12_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LFinger12.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>0</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='LFinger12' type='revolute'>
+        <child>LFinger12_link</child>
+        <parent>LFinger11_link</parent>
+        <axis>
+          <xyz>1e-06 -0.984808 -0.173648</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='LFinger13_link'>
+        <pose>0.231807 0.128936 0.0722005 -1.74706 0.139726 3.11679</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>2e-06</mass>
+          <inertia>
+            <ixx>1.1e-09</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1.1e-09</iyy>
+            <iyz>0</iyz>
+            <izz>1.1e-09</izz>
+          </inertia>
+        </inertial>
+        <collision name='LFinger13_link_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LFinger13_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='LFinger13_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LFinger13.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>0</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='LFinger13' type='revolute'>
+        <child>LFinger13_link</child>
+        <parent>LFinger12_link</parent>
+        <axis>
+          <xyz>1e-06 -0.984808 -0.173648</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='LFinger21_link'>
+        <pose>0.23002 0.10143 0.09696 1.25539 0.976662 -0.264067</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>2e-06</mass>
+          <inertia>
+            <ixx>1.1e-09</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1.1e-09</iyy>
+            <iyz>0</iyz>
+            <izz>1.1e-09</izz>
+          </inertia>
+        </inertial>
+        <collision name='LFinger21_link_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LFinger21_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='LFinger21_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LFinger21.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>0</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='LFinger21' type='revolute'>
+        <child>LFinger21_link</child>
+        <parent>l_wrist</parent>
+        <axis>
+          <xyz>1e-06 -0.984808 0.173649</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='LFinger22_link'>
+        <pose>0.23778 0.0993319 0.0850608 -1.16986 1.1097 -2.77877</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>2e-06</mass>
+          <inertia>
+            <ixx>1.1e-09</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1.1e-09</iyy>
+            <iyz>0</iyz>
+            <izz>1.1e-09</izz>
+          </inertia>
+        </inertial>
+        <collision name='LFinger22_link_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LFinger22_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='LFinger22_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LFinger22.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>0</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='LFinger22' type='revolute'>
+        <child>LFinger22_link</child>
+        <parent>LFinger21_link</parent>
+        <axis>
+          <xyz>1e-06 -0.984808 0.173649</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='LFinger23_link'>
+        <pose>0.231807 0.0970642 0.0722005 -1.39453 0.139725 -3.11679</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>2e-06</mass>
+          <inertia>
+            <ixx>1.1e-09</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1.1e-09</iyy>
+            <iyz>0</iyz>
+            <izz>1.1e-09</izz>
+          </inertia>
+        </inertial>
+        <collision name='LFinger23_link_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LFinger23_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='LFinger23_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LFinger23.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>0</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='LFinger23' type='revolute'>
+        <child>LFinger23_link</child>
+        <parent>LFinger22_link</parent>
+        <axis>
+          <xyz>1e-06 -0.984808 0.173649</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='l_gripper'>
+        <pose>0.2187 0.113 0.08769 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>2e-06</mass>
+          <inertia>
+            <ixx>1.1e-09</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1.1e-09</iyy>
+            <iyz>0</iyz>
+            <izz>1.1e-09</izz>
+          </inertia>
+        </inertial>
+        <gravity>0</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='LHand' type='revolute'>
+        <child>l_gripper</child>
+        <parent>l_wrist</parent>
+        <axis>
+          <xyz>1 0 0</xyz>
+          <limit>
+            <lower>0</lower>
+            <upper>1</upper>
+            <effort>0.292</effort>
+            <velocity>8.33</velocity>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='LThumb1_link'>
+        <pose>0.2099 0.113 0.07362 -1.5708 0.0472984 -3.26826e-08</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>2e-06</mass>
+          <inertia>
+            <ixx>1.1e-09</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1.1e-09</iyy>
+            <iyz>0</iyz>
+            <izz>1.1e-09</izz>
+          </inertia>
+        </inertial>
+        <collision name='LThumb1_link_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LThumb1_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='LThumb1_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LThumb1.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>0</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='LThumb1' type='revolute'>
+        <child>LThumb1_link</child>
+        <parent>l_wrist</parent>
+        <axis>
+          <xyz>-0 1 -4e-06</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='LThumb2_link'>
+        <pose>0.224244 0.113 0.072941 -1.5708 -0.952601 5.30009e-06</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>2e-06</mass>
+          <inertia>
+            <ixx>1.1e-09</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1.1e-09</iyy>
+            <iyz>0</iyz>
+            <izz>1.1e-09</izz>
+          </inertia>
+        </inertial>
+        <collision name='LThumb2_link_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LThumb2_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='LThumb2_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/LThumb2.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>0</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='LThumb2' type='revolute'>
+        <child>LThumb2_link</child>
+        <parent>LThumb1_link</parent>
+        <axis>
+          <xyz>-0 1 -4e-06</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='RPelvis'>
+        <pose>0 -0.05 -0.085 0 -0 0</pose>
+        <inertial>
+          <pose>-0.00781 0.01114 0.02661 0 -0 0</pose>
+          <mass>0.06981</mass>
+          <inertia>
+            <ixx>3.18766e-05</ixx>
+            <ixy>-1.07152e-06</ixy>
+            <ixz>-1.77295e-06</ixz>
+            <iyy>5.18361e-05</iyy>
+            <iyz>-7.00664e-06</iyz>
+            <izz>5.39657e-05</izz>
+          </inertia>
+        </inertial>
+        <collision name='RPelvis_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RHipYawPitch_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='RPelvis_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RHipYawPitch.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='RHipYawPitch' type='revolute'>
+        <child>RPelvis</child>
+        <parent>base_link</parent>
+        <axis>
+          <xyz>0 0.707106 0.707106</xyz>
+          <limit>
+            <lower>-1.14529</lower>
+            <upper>0.740718</upper>
+            <effort>3.348</effort>
+            <velocity>4.16174</velocity>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='RHip'>
+        <pose>0 -0.05 -0.085 0 -0 0</pose>
+        <inertial>
+          <pose>-0.01549 -0.00029 -0.00515 0 -0 0</pose>
+          <mass>0.13053</mass>
+          <inertia>
+            <ixx>2.41136e-05</ixx>
+            <ixy>5.67164e-07</ixy>
+            <ixz>6.30461e-06</ixz>
+            <iyy>6.34886e-05</iyy>
+            <iyz>1.97457e-07</iyz>
+            <izz>5.6773e-05</izz>
+          </inertia>
+        </inertial>
+        <collision name='RHip_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RHipRoll_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='RHip_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RHipRoll.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='RHipRoll' type='revolute'>
+        <child>RHip</child>
+        <parent>RPelvis</parent>
+        <axis>
+          <xyz>1 0 0</xyz>
+          <limit>
+            <lower>-0.79046</lower>
+            <upper>0.379435</upper>
+            <effort>3.348</effort>
+            <velocity>4.16174</velocity>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='RThigh'>
+        <pose>0 -0.05 -0.085 0 -0 0</pose>
+        <inertial>
+          <pose>0.00138 -0.00221 -0.05373 0 -0 0</pose>
+          <mass>0.38968</mass>
+          <inertia>
+            <ixx>0.000510607</ixx>
+            <ixy>-2.02799e-06</ixy>
+            <ixz>5.69893e-05</ixz>
+            <iyy>0.0004665</iyy>
+            <iyz>7.09563e-06</iyz>
+            <izz>0.000301333</izz>
+          </inertia>
+        </inertial>
+        <collision name='RThigh_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RHipPitch_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='RThigh_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RHipPitch.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='RHipPitch' type='revolute'>
+        <child>RThigh</child>
+        <parent>RHip</parent>
+        <axis>
+          <xyz>0 1 0</xyz>
+          <limit>
+            <lower>-1.53589</lower>
+            <upper>0.48398</upper>
+            <effort>3.0226</effort>
+            <velocity>6.40239</velocity>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='RTibia'>
+        <pose>0 -0.05 -0.185 0 -0 0</pose>
+        <inertial>
+          <pose>0.00453 -0.00225 -0.04936 0 -0 0</pose>
+          <mass>0.29142</mass>
+          <inertia>
+            <ixx>0.000471336</ixx>
+            <ixy>-3.8668e-06</ixy>
+            <ixz>-3.71648e-05</ixz>
+            <iyy>0.00041228</iyy>
+            <iyz>-6.11093e-06</iyz>
+            <izz>0.000183997</izz>
+          </inertia>
+        </inertial>
+        <collision name='RTibia_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RKneePitch_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='RTibia_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RKneePitch.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='RKneePitch' type='revolute'>
+        <child>RTibia</child>
+        <parent>RThigh</parent>
+        <axis>
+          <xyz>0 1 0</xyz>
+          <limit>
+            <lower>-0.0923279</lower>
+            <upper>2.11255</upper>
+            <effort>3.0226</effort>
+            <velocity>6.40239</velocity>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='RAnklePitch'>
+        <pose>0 -0.05 -0.2879 0 -0 0</pose>
+        <inertial>
+          <pose>0.00045 -0.00029 0.00685 0 -0 0</pose>
+          <mass>0.13416</mass>
+          <inertia>
+            <ixx>3.22017e-05</ixx>
+            <ixy>4.68321e-08</ixy>
+            <ixz>4.28821e-06</ixz>
+            <iyy>6.79885e-05</iyy>
+            <iyz>-2.71089e-07</iyz>
+            <izz>5.48747e-05</izz>
+          </inertia>
+        </inertial>
+        <collision name='RAnklePitch_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RAnklePitch_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='RAnklePitch_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RAnklePitch.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='RAnklePitch' type='revolute'>
+        <child>RAnklePitch</child>
+        <parent>RTibia</parent>
+        <axis>
+          <xyz>0 1 0</xyz>
+          <limit>
+            <lower>-1.1863</lower>
+            <upper>0.932006</upper>
+            <effort>3.0226</effort>
+            <velocity>6.40239</velocity>
+          </limit>
+          <dynamics/>
+        </axis>
+        <physics>
+          <ode>
+            <limit>
+              <cfm>0</cfm>
+              <erp>0.2</erp>
+            </limit>
+          </ode>
+        </physics>
+      </joint>
+      <link name='r_ankle'>
+        <pose>0 -0.05 -0.2879 0 -0 0</pose>
+        <inertial>
+          <pose>0.0254197 -0.00330005 -0.0323906 0 -0 0</pose>
+          <mass>0.161848</mass>
+          <inertia>
+            <ixx>9.77622e-05</ixx>
+            <ixy>-7.70148e-06</ixy>
+            <ixz>5.88115e-06</ixz>
+            <iyy>0.000369134</iyy>
+            <iyz>-1.55069e-06</iyz>
+            <izz>0.000418725</izz>
+          </inertia>
+        </inertial>
+        <collision name='r_ankle_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RAnkleRoll_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode>
+                <max_vel>0.1</max_vel>
+                <min_depth>0.003</min_depth>
+              </ode>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+                <fdir1>1 0 0</fdir1>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <collision name='r_ankle_collision_RFsrFL_frame'>
+          <pose>0.07025 0.0231 -0.04511 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.01 0.01 0.005</size>
+            </box>
+          </geometry>
+          <surface>
+            <contact>
+              <ode>
+                <max_vel>0.1</max_vel>
+                <min_depth>0.003</min_depth>
+              </ode>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+                <fdir1>1 0 0</fdir1>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <surface>
+            <contact>
+              <ode>
+                <max_vel>0.1</max_vel>
+                <min_depth>0.003</min_depth>
+              </ode>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+                <fdir1>1 0 0</fdir1>
+              </ode>
+            </friction>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <collision name='r_ankle_collision_RFsrFR_frame'>
+          <pose>0.07025 -0.0299 -0.04511 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.01 0.01 0.005</size>
+            </box>
+          </geometry>
+          <surface>
+            <contact>
+              <ode>
+                <max_vel>0.1</max_vel>
+                <min_depth>0.003</min_depth>
+              </ode>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+                <fdir1>1 0 0</fdir1>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <surface>
+            <contact>
+              <ode>
+                <max_vel>0.1</max_vel>
+                <min_depth>0.003</min_depth>
+              </ode>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+                <fdir1>1 0 0</fdir1>
+              </ode>
+            </friction>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <collision name='r_ankle_collision_RFsrRL_frame'>
+          <pose>-0.03025 0.0191 -0.04511 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.01 0.01 0.005</size>
+            </box>
+          </geometry>
+          <surface>
+            <contact>
+              <ode>
+                <max_vel>0.1</max_vel>
+                <min_depth>0.003</min_depth>
+              </ode>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+                <fdir1>1 0 0</fdir1>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <surface>
+            <contact>
+              <ode>
+                <max_vel>0.1</max_vel>
+                <min_depth>0.003</min_depth>
+              </ode>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+                <fdir1>1 0 0</fdir1>
+              </ode>
+            </friction>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <collision name='r_ankle_collision_RFsrRR_frame'>
+          <pose>-0.02965 -0.0299 -0.04511 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.01 0.01 0.005</size>
+            </box>
+          </geometry>
+          <surface>
+            <contact>
+              <ode>
+                <max_vel>0.1</max_vel>
+                <min_depth>0.003</min_depth>
+              </ode>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+                <fdir1>1 0 0</fdir1>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <surface>
+            <contact>
+              <ode>
+                <max_vel>0.1</max_vel>
+                <min_depth>0.003</min_depth>
+              </ode>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+                <fdir1>1 0 0</fdir1>
+              </ode>
+            </friction>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='r_ankle_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RAnkleRoll.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <sensor name='RFsrFL' type='contact'>
+          <always_on>1</always_on>
+          <update_rate>20</update_rate>
+          <visualize>0</visualize>
+          <contact>
+            <collision>r_ankle_collision_RFsrFL_frame</collision>
+            <topic>__default_topic__</topic>
+          </contact>
+          <plugin name='gazebo_nao_RFsrFL' filename='libgazebo_ros_bumper.so'>
+            <robotNamespace>nao_robot</robotNamespace>
+            <alwaysOn>true</alwaysOn>
+            <bumperTopicName>FSR/RFoot/FrontLeft</bumperTopicName>
+            <frameName>RFsrFL_frame</frameName>
+          </plugin>
+          <pose>0.07025 0.0231 -0.04511 0 -0 0</pose>
+        </sensor>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <sensor name='RFsrFR' type='contact'>
+          <always_on>1</always_on>
+          <update_rate>20</update_rate>
+          <visualize>0</visualize>
+          <contact>
+            <collision>r_ankle_collision_RFsrFR_frame</collision>
+            <topic>__default_topic__</topic>
+          </contact>
+          <plugin name='gazebo_nao_RFsrFR' filename='libgazebo_ros_bumper.so'>
+            <robotNamespace>nao_robot</robotNamespace>
+            <alwaysOn>true</alwaysOn>
+            <bumperTopicName>FSR/RFoot/FrontRight</bumperTopicName>
+            <frameName>RFsrFR_frame</frameName>
+          </plugin>
+          <pose>0.07025 -0.0299 -0.04511 0 -0 0</pose>
+        </sensor>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <sensor name='RFsrRL' type='contact'>
+          <always_on>1</always_on>
+          <update_rate>20</update_rate>
+          <visualize>0</visualize>
+          <contact>
+            <collision>r_ankle_collision_RFsrRL_frame</collision>
+            <topic>__default_topic__</topic>
+          </contact>
+          <plugin name='gazebo_nao_RFsrRL' filename='libgazebo_ros_bumper.so'>
+            <robotNamespace>nao_robot</robotNamespace>
+            <alwaysOn>true</alwaysOn>
+            <bumperTopicName>FSR/RFoot/RearLeft</bumperTopicName>
+            <frameName>RFsrRL_frame</frameName>
+          </plugin>
+          <pose>-0.03025 0.0191 -0.04511 0 -0 0</pose>
+        </sensor>
+        <gravity>1</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <sensor name='RFsrRR' type='contact'>
+          <always_on>1</always_on>
+          <update_rate>20</update_rate>
+          <visualize>0</visualize>
+          <contact>
+            <collision>r_ankle_collision_RFsrRR_frame</collision>
+            <topic>__default_topic__</topic>
+          </contact>
+          <plugin name='gazebo_nao_RFsrRR' filename='libgazebo_ros_bumper.so'>
+            <robotNamespace>nao_robot</robotNamespace>
+            <alwaysOn>true</alwaysOn>
+            <bumperTopicName>FSR/RFoot/RearRight</bumperTopicName>
+            <frameName>RFsrRR_frame</frameName>
+          </plugin>
+          <pose>-0.02965 -0.0299 -0.04511 0 -0 0</pose>
+        </sensor>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='RAnkleRoll' type='revolute'>
+        <child>r_ankle</child>
+        <parent>RAnklePitch</parent>
+        <axis>
+          <xyz>1 0 0</xyz>
+          <limit>
+            <lower>-0.768992</lower>
+            <upper>0.397761</upper>
+            <effort>3.348</effort>
+            <velocity>4.16174</velocity>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='RShoulder'>
+        <pose>0 -0.098 0.1 0 -0 0</pose>
+        <inertial>
+          <pose>-0.00165 0.02663 0.00014 0 -0 0</pose>
+          <mass>0.07504</mass>
+          <inertia>
+            <ixx>3.10677e-05</ixx>
+            <ixy>-1.2692e-06</ixy>
+            <ixz>6.04576e-09</ixz>
+            <iyy>1.39498e-05</iyy>
+            <iyz>2.99484e-07</iyz>
+            <izz>3.30001e-05</izz>
+          </inertia>
+        </inertial>
+        <collision name='RShoulder_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RShoulderPitch_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='RShoulder_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RShoulderPitch.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='RShoulderPitch' type='revolute'>
+        <child>RShoulder</child>
+        <parent>base_link</parent>
+        <axis>
+          <xyz>0 1 0</xyz>
+          <limit>
+            <lower>-2.08567</lower>
+            <upper>2.08567</upper>
+            <effort>1.329</effort>
+            <velocity>8.26797</velocity>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='RBicep'>
+        <pose>0 -0.098 0.1 0 -0 0</pose>
+        <inertial>
+          <pose>0.02455 -0.00563 0.0033 0 -0 0</pose>
+          <mass>0.15777</mass>
+          <inertia>
+            <ixx>0.000103401</ixx>
+            <ixy>5.48849e-05</ixy>
+            <ixz>-1.32643e-05</ixz>
+            <iyy>0.00027077</iyy>
+            <iyz>9.16707e-06</iyz>
+            <izz>0.000254529</izz>
+          </inertia>
+        </inertial>
+        <collision name='RBicep_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RShoulderRoll_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='RBicep_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RShoulderRoll.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='RShoulderRoll' type='revolute'>
+        <child>RBicep</child>
+        <parent>RShoulder</parent>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-1.32645</lower>
+            <upper>0.314159</upper>
+            <effort>1.783</effort>
+            <velocity>7.19407</velocity>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='RElbow'>
+        <pose>0.105 -0.113 0.1 0 -0 0</pose>
+        <inertial>
+          <pose>-0.02744 0 -0.00014 0 -0 0</pose>
+          <mass>0.06483</mass>
+          <inertia>
+            <ixx>5.59588e-06</ixx>
+            <ixy>4.21e-09</ixy>
+            <ixz>2.92241e-07</ixz>
+            <iyy>2.66179e-05</iyy>
+            <iyz>-1.84e-09</iyz>
+            <izz>2.76294e-05</izz>
+          </inertia>
+        </inertial>
+        <gravity>1</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='RElbowYaw' type='revolute'>
+        <child>RElbow</child>
+        <parent>RBicep</parent>
+        <axis>
+          <xyz>1 0 0</xyz>
+          <limit>
+            <lower>-2.08567</lower>
+            <upper>2.08567</upper>
+            <effort>1.547</effort>
+            <velocity>8.26797</velocity>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='RForeArm'>
+        <pose>0.105 -0.113 0.1 0 -0 0</pose>
+        <inertial>
+          <pose>0.02556 -0.00281 0.00076 0 -0 0</pose>
+          <mass>0.07761</mass>
+          <inertia>
+            <ixx>2.47331e-05</ixx>
+            <ixy>-3.2418e-06</ixy>
+            <ixz>9.06451e-07</ixz>
+            <iyy>3.84719e-05</iyy>
+            <iyz>-1.38804e-07</iyz>
+            <izz>3.59319e-05</izz>
+          </inertia>
+        </inertial>
+        <collision name='RForeArm_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RElbowRoll_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='RForeArm_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RElbowRoll.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='RElbowRoll' type='revolute'>
+        <child>RForeArm</child>
+        <parent>RElbow</parent>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>0.0349066</lower>
+            <upper>1.54462</upper>
+            <effort>1.532</effort>
+            <velocity>7.19407</velocity>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='r_wrist'>
+        <pose>0.16095 -0.113 0.1 0 -0 0</pose>
+        <inertial>
+          <pose>0.03434 0.00088 0.00308 0 -0 0</pose>
+          <mass>0.18533</mass>
+          <inertia>
+            <ixx>6.86477e-05</ixx>
+            <ixy>1.13165e-05</ixy>
+            <ixz>-2.87254e-06</ixz>
+            <iyy>0.000135756</iyy>
+            <iyz>3.68003e-06</iyz>
+            <izz>0.000133228</izz>
+          </inertia>
+        </inertial>
+        <collision name='r_wrist_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RWristYaw_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='r_wrist_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RWristYaw.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='RWristYaw' type='revolute'>
+        <child>r_wrist</child>
+        <parent>RForeArm</parent>
+        <axis>
+          <xyz>1 0 0</xyz>
+          <limit>
+            <lower>-1.82387</lower>
+            <upper>1.82387</upper>
+            <effort>0.4075</effort>
+            <velocity>24.6229</velocity>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='RFinger11_link'>
+        <pose>0.23002 -0.10143 0.09696 1.8862 0.976662 0.264067</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>2e-06</mass>
+          <inertia>
+            <ixx>1.1e-09</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1.1e-09</iyy>
+            <iyz>0</iyz>
+            <izz>1.1e-09</izz>
+          </inertia>
+        </inertial>
+        <collision name='RFinger11_link_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RFinger11_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='RFinger11_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RFinger11.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>0</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='RFinger11' type='revolute'>
+        <child>RFinger11_link</child>
+        <parent>r_wrist</parent>
+        <axis>
+          <xyz>1e-06 -0.984808 -0.173648</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='RFinger12_link'>
+        <pose>0.23778 -0.0993319 0.0850608 -1.97173 1.1097 2.77877</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>2e-06</mass>
+          <inertia>
+            <ixx>1.1e-09</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1.1e-09</iyy>
+            <iyz>0</iyz>
+            <izz>1.1e-09</izz>
+          </inertia>
+        </inertial>
+        <collision name='RFinger12_link_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RFinger12_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='RFinger12_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RFinger12.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>0</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='RFinger12' type='revolute'>
+        <child>RFinger12_link</child>
+        <parent>RFinger11_link</parent>
+        <axis>
+          <xyz>1e-06 -0.984808 -0.173648</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='RFinger13_link'>
+        <pose>0.231807 -0.0970642 0.0722005 -1.74706 0.139726 3.11679</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>2e-06</mass>
+          <inertia>
+            <ixx>1.1e-09</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1.1e-09</iyy>
+            <iyz>0</iyz>
+            <izz>1.1e-09</izz>
+          </inertia>
+        </inertial>
+        <collision name='RFinger13_link_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RFinger13_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='RFinger13_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RFinger13.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>0</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='RFinger13' type='revolute'>
+        <child>RFinger13_link</child>
+        <parent>RFinger12_link</parent>
+        <axis>
+          <xyz>1e-06 -0.984808 -0.173648</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='RFinger21_link'>
+        <pose>0.23002 -0.12457 0.09696 1.25539 0.976662 -0.264067</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>2e-06</mass>
+          <inertia>
+            <ixx>1.1e-09</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1.1e-09</iyy>
+            <iyz>0</iyz>
+            <izz>1.1e-09</izz>
+          </inertia>
+        </inertial>
+        <collision name='RFinger21_link_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RFinger21_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='RFinger21_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RFinger21.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>0</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='RFinger21' type='revolute'>
+        <child>RFinger21_link</child>
+        <parent>r_wrist</parent>
+        <axis>
+          <xyz>1e-06 -0.984808 0.173649</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='RFinger22_link'>
+        <pose>0.23778 -0.126668 0.0850608 -1.16986 1.1097 -2.77877</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>2e-06</mass>
+          <inertia>
+            <ixx>1.1e-09</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1.1e-09</iyy>
+            <iyz>0</iyz>
+            <izz>1.1e-09</izz>
+          </inertia>
+        </inertial>
+        <collision name='RFinger22_link_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RFinger22_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='RFinger22_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RFinger22.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>0</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='RFinger22' type='revolute'>
+        <child>RFinger22_link</child>
+        <parent>RFinger21_link</parent>
+        <axis>
+          <xyz>1e-06 -0.984808 0.173649</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='RFinger23_link'>
+        <pose>0.231807 -0.128936 0.0722005 -1.39453 0.139725 -3.11679</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>2e-06</mass>
+          <inertia>
+            <ixx>1.1e-09</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1.1e-09</iyy>
+            <iyz>0</iyz>
+            <izz>1.1e-09</izz>
+          </inertia>
+        </inertial>
+        <collision name='RFinger23_link_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RFinger23_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='RFinger23_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RFinger23.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>0</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='RFinger23' type='revolute'>
+        <child>RFinger23_link</child>
+        <parent>RFinger22_link</parent>
+        <axis>
+          <xyz>1e-06 -0.984808 0.173649</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='r_gripper'>
+        <pose>0.2187 -0.113 0.08769 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>2e-06</mass>
+          <inertia>
+            <ixx>1.1e-09</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1.1e-09</iyy>
+            <iyz>0</iyz>
+            <izz>1.1e-09</izz>
+          </inertia>
+        </inertial>
+        <gravity>0</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='RHand' type='revolute'>
+        <child>r_gripper</child>
+        <parent>r_wrist</parent>
+        <axis>
+          <xyz>1 0 0</xyz>
+          <limit>
+            <lower>0</lower>
+            <upper>1</upper>
+            <effort>0.292</effort>
+            <velocity>8.33</velocity>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='RThumb1_link'>
+        <pose>0.2099 -0.113 0.07362 -1.5708 0.0472984 -3.26826e-08</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>2e-06</mass>
+          <inertia>
+            <ixx>1.1e-09</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1.1e-09</iyy>
+            <iyz>0</iyz>
+            <izz>1.1e-09</izz>
+          </inertia>
+        </inertial>
+        <collision name='RThumb1_link_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RThumb1_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='RThumb1_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RThumb1.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>0</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='RThumb1' type='revolute'>
+        <child>RThumb1_link</child>
+        <parent>r_wrist</parent>
+        <axis>
+          <xyz>-0 1 -4e-06</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <link name='RThumb2_link'>
+        <pose>0.224244 -0.113 0.072941 -1.5708 -0.952601 5.30009e-06</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>2e-06</mass>
+          <inertia>
+            <ixx>1.1e-09</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1.1e-09</iyy>
+            <iyz>0</iyz>
+            <izz>1.1e-09</izz>
+          </inertia>
+        </inertial>
+        <collision name='RThumb2_link_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RThumb2_0.10.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.5</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='RThumb2_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>/opt/ros/indigo/share/nao_meshes/meshes/V40/RThumb2.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <gravity>0</gravity>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='RThumb2' type='revolute'>
+        <child>RThumb2_link</child>
+        <parent>RThumb1_link</parent>
+        <axis>
+          <xyz>-0 1 -4e-06</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics/>
+        </axis>
+      </joint>
+      <static>0</static>
+      <plugin name='gazebo_ros_control' filename='libgazebo_ros_control.so'>
+        <robotNamespace/>
+        <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+      </plugin>
+      <plugin name='mimic_hipyawpitch' filename='libroboticsgroup_gazebo_mimic_joint_plugin.so'>
+        <joint>LHipYawPitch</joint>
+        <mimicJoint>RHipYawPitch</mimicJoint>
+        <multiplier>1.0</multiplier>
+        <offset>0.0</offset>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='mimic_LFinger11' filename='libroboticsgroup_gazebo_mimic_joint_plugin.so'>
+        <joint>LHand</joint>
+        <mimicJoint>LFinger11</mimicJoint>
+        <multiplier>-0.785398163398</multiplier>
+        <offset>0.785398163398</offset>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='mimic_LFinger12' filename='libroboticsgroup_gazebo_mimic_joint_plugin.so'>
+        <joint>LHand</joint>
+        <mimicJoint>LFinger12</mimicJoint>
+        <multiplier>-0.785398163398</multiplier>
+        <offset>0.785398163398</offset>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='mimic_LFinger13' filename='libroboticsgroup_gazebo_mimic_joint_plugin.so'>
+        <joint>LHand</joint>
+        <mimicJoint>LFinger13</mimicJoint>
+        <multiplier>-0.785398163398</multiplier>
+        <offset>0.785398163398</offset>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='mimic_LFinger21' filename='libroboticsgroup_gazebo_mimic_joint_plugin.so'>
+        <joint>LHand</joint>
+        <mimicJoint>LFinger21</mimicJoint>
+        <multiplier>-0.785398163398</multiplier>
+        <offset>0.785398163398</offset>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='mimic_LFinger22' filename='libroboticsgroup_gazebo_mimic_joint_plugin.so'>
+        <joint>LHand</joint>
+        <mimicJoint>LFinger22</mimicJoint>
+        <multiplier>-0.785398163398</multiplier>
+        <offset>0.785398163398</offset>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='mimic_LFinger23' filename='libroboticsgroup_gazebo_mimic_joint_plugin.so'>
+        <joint>LHand</joint>
+        <mimicJoint>LFinger23</mimicJoint>
+        <multiplier>-0.785398163398</multiplier>
+        <offset>0.785398163398</offset>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='mimic_RFinger11' filename='libroboticsgroup_gazebo_mimic_joint_plugin.so'>
+        <joint>RHand</joint>
+        <mimicJoint>RFinger11</mimicJoint>
+        <multiplier>-0.785398163398</multiplier>
+        <offset>0.785398163398</offset>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='mimic_RFinger12' filename='libroboticsgroup_gazebo_mimic_joint_plugin.so'>
+        <joint>RHand</joint>
+        <mimicJoint>RFinger12</mimicJoint>
+        <multiplier>-0.785398163398</multiplier>
+        <offset>0.785398163398</offset>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='mimic_RFinger13' filename='libroboticsgroup_gazebo_mimic_joint_plugin.so'>
+        <joint>RHand</joint>
+        <mimicJoint>RFinger13</mimicJoint>
+        <multiplier>-0.785398163398</multiplier>
+        <offset>0.785398163398</offset>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='mimic_RFinger21' filename='libroboticsgroup_gazebo_mimic_joint_plugin.so'>
+        <joint>RHand</joint>
+        <mimicJoint>RFinger21</mimicJoint>
+        <multiplier>-0.785398163398</multiplier>
+        <offset>0.785398163398</offset>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='mimic_RFinger22' filename='libroboticsgroup_gazebo_mimic_joint_plugin.so'>
+        <joint>RHand</joint>
+        <mimicJoint>RFinger22</mimicJoint>
+        <multiplier>-0.785398163398</multiplier>
+        <offset>0.785398163398</offset>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='mimic_RFinger23' filename='libroboticsgroup_gazebo_mimic_joint_plugin.so'>
+        <joint>RHand</joint>
+        <mimicJoint>RFinger23</mimicJoint>
+        <multiplier>-0.785398163398</multiplier>
+        <offset>0.785398163398</offset>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='LThumb1' filename='libroboticsgroup_gazebo_mimic_joint_plugin.so'>
+        <joint>LHand</joint>
+        <mimicJoint>LThumb1</mimicJoint>
+        <multiplier>-0.785398163398</multiplier>
+        <offset>0.785398163398</offset>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='LThumb2' filename='libroboticsgroup_gazebo_mimic_joint_plugin.so'>
+        <joint>LHand</joint>
+        <mimicJoint>LThumb2</mimicJoint>
+        <multiplier>-0.785398163398</multiplier>
+        <offset>0.785398163398</offset>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='RThumb1' filename='libroboticsgroup_gazebo_mimic_joint_plugin.so'>
+        <joint>RHand</joint>
+        <mimicJoint>RThumb1</mimicJoint>
+        <multiplier>-0.785398163398</multiplier>
+        <offset>0.785398163398</offset>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='RThumb2' filename='libroboticsgroup_gazebo_mimic_joint_plugin.so'>
+        <joint>RHand</joint>
+        <mimicJoint>RThumb2</mimicJoint>
+        <multiplier>-0.785398163398</multiplier>
+        <offset>0.785398163398</offset>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='LFinger11_link' filename='libroboticsgroup_gazebo_disable_link_plugin.so'>
+        <link>LFinger11_link</link>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='LFinger12_link' filename='libroboticsgroup_gazebo_disable_link_plugin.so'>
+        <link>LFinger12_link</link>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='LFinger13_link' filename='libroboticsgroup_gazebo_disable_link_plugin.so'>
+        <link>LFinger13_link</link>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='LFinger21_link' filename='libroboticsgroup_gazebo_disable_link_plugin.so'>
+        <link>LFinger21_link</link>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='LFinger22_link' filename='libroboticsgroup_gazebo_disable_link_plugin.so'>
+        <link>LFinger22_link</link>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='LFinger23_link' filename='libroboticsgroup_gazebo_disable_link_plugin.so'>
+        <link>LFinger23_link</link>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='LThumb1_link' filename='libroboticsgroup_gazebo_disable_link_plugin.so'>
+        <link>LThumb1_link</link>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='LThumb2_link' filename='libroboticsgroup_gazebo_disable_link_plugin.so'>
+        <link>LThumb2_link</link>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='l_gripper' filename='libroboticsgroup_gazebo_disable_link_plugin.so'>
+        <link>l_gripper</link>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='RFinger11_link' filename='libroboticsgroup_gazebo_disable_link_plugin.so'>
+        <link>RFinger11_link</link>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='RFinger12_link' filename='libroboticsgroup_gazebo_disable_link_plugin.so'>
+        <link>RFinger12_link</link>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='RFinger13_link' filename='libroboticsgroup_gazebo_disable_link_plugin.so'>
+        <link>RFinger13_link</link>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='RFinger21_link' filename='libroboticsgroup_gazebo_disable_link_plugin.so'>
+        <link>RFinger21_link</link>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='RFinger22_link' filename='libroboticsgroup_gazebo_disable_link_plugin.so'>
+        <link>RFinger22_link</link>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='RFinger23_link' filename='libroboticsgroup_gazebo_disable_link_plugin.so'>
+        <link>RFinger23_link</link>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='RThumb1_link' filename='libroboticsgroup_gazebo_disable_link_plugin.so'>
+        <link>RThumb1_link</link>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='RThumb2_link' filename='libroboticsgroup_gazebo_disable_link_plugin.so'>
+        <link>RThumb2_link</link>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='r_gripper' filename='libroboticsgroup_gazebo_disable_link_plugin.so'>
+        <link>r_gripper</link>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <pose>-0.5 1 0.335 0 -0 0</pose>
+    </model>
+    <model name='Kitchen Dining'>
+      <static>1</static>
+      <link name='link'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://kitchen_dining/meshes/kitchen_dining.dae</uri>
+              <scale>0.4 0.4 0.4</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <pose>0 -0.406086 0 0 -0 0</pose>
+    </model>
+    <model name='kinect'>
+      <pose>-1 1.55594 0.036 0 -0 0</pose>
+      <link name='link'>
+        <inertial>
+          <mass>0.1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>0.073 0.276 0.072</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode/>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://kinect/meshes/kinect.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <sensor name='camera' type='depth'>
+          <update_rate>20</update_rate>
+          <camera name='__default__'>
+            <horizontal_fov>1.0472</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>480</height>
+              <format>R8G8B8</format>
+            </image>
+            <clip>
+              <near>0.05</near>
+              <far>3</far>
+            </clip>
+          </camera>
+        </sensor>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <static>0</static>
+    </model>
+    <model name='kinect_0'>
+      <pose>0 1 0.036 0 -0 0</pose>
+      <link name='link'>
+        <inertial>
+          <mass>0.1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>0.073 0.276 0.072</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode/>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://kinect/meshes/kinect.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <sensor name='camera' type='depth'>
+          <update_rate>20</update_rate>
+          <camera name='__default__'>
+            <horizontal_fov>1.0472</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>480</height>
+              <format>R8G8B8</format>
+            </image>
+            <clip>
+              <near>0.05</near>
+              <far>3</far>
+            </clip>
+          </camera>
+        </sensor>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <static>0</static>
+    </model>
+    <model name='kinect_1'>
+      <pose>0 2 0.036 0 -0 0</pose>
+      <link name='link'>
+        <inertial>
+          <mass>0.1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>0.073 0.276 0.072</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode/>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://kinect/meshes/kinect.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <sensor name='camera' type='depth'>
+          <update_rate>20</update_rate>
+          <camera name='__default__'>
+            <horizontal_fov>1.0472</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>480</height>
+              <format>R8G8B8</format>
+            </image>
+            <clip>
+              <near>0.05</near>
+              <far>3</far>
+            </clip>
+          </camera>
+        </sensor>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <static>0</static>
+    </model>
+    <state world_name='default'>
+      <sim_time>0 0</sim_time>
+      <real_time>0 0</real_time>
+      <wall_time>1457220891 313166955</wall_time>
+      <model name='Kitchen Dining'>
+        <pose>0.098749 -0.467335 0 0 -0 0</pose>
+        <link name='link'>
+          <pose>0.098749 -0.467335 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='ground_plane'>
+        <pose>0 0 0 0 -0 0</pose>
+        <link name='link'>
+          <pose>0 0 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='kinect'>
+        <pose>-1.31179 1.45319 1.27736 0 0.270724 0</pose>
+        <link name='link'>
+          <pose>-1.31179 1.45319 1.27736 0 0.270724 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='kinect_0'>
+        <pose>0.00016 0.821478 1.26373 0.023038 0.395499 1.55416</pose>
+        <link name='link'>
+          <pose>0.00016 0.821478 1.26373 0.023038 0.395499 1.55416</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='kinect_1'>
+        <pose>-0.08739 2.30871 1.2746 -1.41232e-17 0.18668 -1.5815</pose>
+        <link name='link'>
+          <pose>-0.08739 2.30871 1.2746 -1.41232e-17 0.18668 -1.5815</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='nao_v40'>
+        <pose>-0.5 1 0.335 0 -0 0</pose>
+        <link name='Head'>
+          <pose>-0.5 1 0.4615 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='LAnklePitch'>
+          <pose>-0.5 1.05 0.0471 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='LBicep'>
+          <pose>-0.5 1.098 0.435 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='LElbow'>
+          <pose>-0.395 1.113 0.435 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='LFinger11_link'>
+          <pose>-0.26998 1.12457 0.43196 1.8862 0.976662 0.264067</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='LFinger12_link'>
+          <pose>-0.26222 1.12667 0.420061 -1.97173 1.1097 2.77877</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='LFinger13_link'>
+          <pose>-0.268193 1.12894 0.407201 -1.74706 0.139726 3.11679</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='LFinger21_link'>
+          <pose>-0.26998 1.10143 0.43196 1.25539 0.976662 -0.264067</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='LFinger22_link'>
+          <pose>-0.26222 1.09933 0.420061 -1.16986 1.1097 -2.77877</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='LFinger23_link'>
+          <pose>-0.268193 1.09706 0.407201 -1.39453 0.139725 -3.11679</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='LForeArm'>
+          <pose>-0.395 1.113 0.435 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='LHip'>
+          <pose>-0.5 1.05 0.25 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='LPelvis'>
+          <pose>-0.5 1.05 0.25 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='LShoulder'>
+          <pose>-0.5 1.098 0.435 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='LThigh'>
+          <pose>-0.5 1.05 0.25 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='LThumb1_link'>
+          <pose>-0.2901 1.113 0.40862 -1.5708 0.047298 3.47333e-18</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='LThumb2_link'>
+          <pose>-0.275756 1.113 0.407941 -1.5708 -0.952601 5e-06</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='LTibia'>
+          <pose>-0.5 1.05 0.15 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='Neck'>
+          <pose>-0.5 1 0.4615 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='RAnklePitch'>
+          <pose>-0.5 0.95 0.0471 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='RBicep'>
+          <pose>-0.5 0.902 0.435 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='RElbow'>
+          <pose>-0.395 0.887 0.435 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='RFinger11_link'>
+          <pose>-0.26998 0.89857 0.43196 1.8862 0.976662 0.264067</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='RFinger12_link'>
+          <pose>-0.26222 0.900668 0.420061 -1.97173 1.1097 2.77877</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='RFinger13_link'>
+          <pose>-0.268193 0.902936 0.407201 -1.74706 0.139726 3.11679</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='RFinger21_link'>
+          <pose>-0.26998 0.87543 0.43196 1.25539 0.976662 -0.264067</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='RFinger22_link'>
+          <pose>-0.26222 0.873332 0.420061 -1.16986 1.1097 -2.77877</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='RFinger23_link'>
+          <pose>-0.268193 0.871064 0.407201 -1.39453 0.139725 -3.11679</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='RForeArm'>
+          <pose>-0.395 0.887 0.435 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='RHip'>
+          <pose>-0.5 0.95 0.25 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='RPelvis'>
+          <pose>-0.5 0.95 0.25 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='RShoulder'>
+          <pose>-0.5 0.902 0.435 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='RThigh'>
+          <pose>-0.5 0.95 0.25 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='RThumb1_link'>
+          <pose>-0.2901 0.887 0.40862 -1.5708 0.047298 3.47333e-18</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='RThumb2_link'>
+          <pose>-0.275756 0.887 0.407941 -1.5708 -0.952601 5e-06</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='RTibia'>
+          <pose>-0.5 0.95 0.15 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='base_link'>
+          <pose>-0.5 1 0.335 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='l_ankle'>
+          <pose>-0.5 1.05 0.0471 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='l_gripper'>
+          <pose>-0.2813 1.113 0.42269 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='l_wrist'>
+          <pose>-0.33905 1.113 0.435 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='r_ankle'>
+          <pose>-0.5 0.95 0.0471 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='r_gripper'>
+          <pose>-0.2813 0.887 0.42269 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='r_wrist'>
+          <pose>-0.33905 0.887 0.435 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+    </state>
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose>2.57463 1.68501 3.41002 4.6851e-18 0.736942 -3.07342</pose>
+        <view_controller>orbit</view_controller>
+      </camera>
+    </gui>
+  </world>
+</sdf>

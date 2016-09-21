@@ -1,0 +1,40 @@
+<launch>
+	<!-- upload urdf -->
+
+	<group ns="atlas" >
+
+		<arg name="gui" default="True" />
+
+		<param name="robot_id" value="0" />
+		<param name="tf_prefix" type="string" value="atlas" />
+		
+		<param name="robot_description" textfile="$(find ellipsoidal_atlas)/urdf/atlas_simple_shapes.urdf" />
+
+		<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+
+		<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+
+	</group>
+
+	<node pkg="tf" type="static_transform_publisher" name="world_robot1_base_broadcaster" args="0 0 0.9 0 0 0 /world /atlas/pelvis 100" />
+
+	<group ns="ellip_atlas">
+
+		<arg name="gui" default="True" />
+
+		<param name="robot_id" value="1" />
+		<param name="tf_prefix" type="string" value="ellip_atlas" />
+
+		<param name="robot_description" textfile="$(find ellipsoidal_atlas)/urdf/atlas_simple_shapes_ellipsoid.urdf" />
+
+		<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+
+		<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+
+	</group>
+
+	<node pkg="tf" type="static_transform_publisher" name="world_robot2_base_broadcaster" args="0 0 0.9 0 0 0 /world /ellip_atlas/pelvis 100" />
+
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find ellipsoidal_atlas)/default.rviz"/>
+
+</launch>

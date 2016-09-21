@@ -1,0 +1,33 @@
+<launch>
+	<group ns="nao_box">
+		<arg name="version" default="V40" />
+		<include file="$(find nao_description)/launch/robot_state_publisher.launch">
+			<arg name="version" value="$(arg version)" />
+		</include>
+
+		<arg name="gui" default="true" />
+		<param name="use_gui" value="$(arg gui)"/>
+
+		<param name="robot_id" value="0" />
+		<param name="tf_prefix" type="string" value="nao_box" />
+
+		<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+
+		<!--node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" /-->
+
+		<arg name="config_file" value="$(find nao_description)/config/urdf.rviz"/>
+	</group>
+	<node pkg="tf" type="static_transform_publisher" name="world_nao_broadcaster" args="0 0 0.35 0 0 0 /world /nao_box/base_link 100 "/>
+	<node pkg="tf" type="static_transform_publisher" name="base_nao_broadcaster" args="0 0 0 0 0 0 /nao_box/base_link /nao_box/torso 100 "/>
+
+
+	<param name="robot_description" textfile="$(find nao)/urdf/chair.urdf"/>
+
+	
+	<node pkg="tf" type="static_transform_publisher" name="world_box_broadcaster" args="-0.24 0.02 0.0 0 0 0 /nao_box/RFootBumperLeft_frame /base_link 100 "/>
+	
+
+
+	<node name="$(anon rviz)" pkg="rviz" type="rviz" respawn="false" output="screen"  />
+</launch>
+
